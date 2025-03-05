@@ -23,13 +23,13 @@ class ShopScreen extends StatelessWidget {
             child: Column(
               // mainAxisSize: MainAxisSize.max,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 30),
+                const Padding(
+                  padding: EdgeInsets.only(left: 30),
                   child: Align(
                     alignment: Alignment.topLeft,
                     child: Text(
                       "Limited Time Offers",
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Constants.yellowColor,
                         fontSize: 28.5,
                       ),
@@ -53,26 +53,26 @@ class ShopScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.only(top: 25),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(left: 30),
+                        padding: EdgeInsets.only(left: 30),
                         child: Text(
                           "Deals",
-                          style: const TextStyle(
+                          style: TextStyle(
                             color: Constants.yellowColor,
                             fontSize: 28.5,
                           ),
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(right: 20),
+                        padding: EdgeInsets.only(right: 20),
                         child: Text(
                           "View all",
-                          style: const TextStyle(
+                          style: TextStyle(
                             color: Constants.yellowColor,
                             fontSize: 28.5,
                           ),
@@ -81,7 +81,7 @@ class ShopScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 12,
                 ),
                 SingleChildScrollView(

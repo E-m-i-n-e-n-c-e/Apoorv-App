@@ -1,6 +1,4 @@
 import 'package:apoorv_app/widgets/provider/user_info_provider.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 import '../../../widgets/signup-flow/qr/generate_qr.dart';
@@ -239,6 +237,6 @@ class _PointsScreenState extends State<PointsScreen> {
 
   void _makeAPICall(String searchText) {
     // Make your API call here using the searchText
-    print('API call with search text: $searchText');
+    debugPrint('API call with search text: $searchText');
   }
 }

@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
 
   void showAppCloseConfirmation(BuildContext context) {
     final snackBar = SnackBar(
-      content: Text("Press back again to exit"),
+      content: const Text("Press back again to exit"),
       backgroundColor: Colors.white,
       action: SnackBarAction(
         label: 'Yes',
@@ -52,8 +52,8 @@ class _HomePageState extends State<HomePage> {
 
   List screens = [
     const FeedScreen(),
-     MapsScreen(),
-    PointsScreen(),
+    const MapsScreen(),
+    const PointsScreen(),
     const ProfileScreen(),
   ];
   @override
@@ -64,8 +64,8 @@ class _HomePageState extends State<HomePage> {
         if (didPop) {
           return;
         }
-        popCount+=1;
-        if(popCount == 1){
+        popCount += 1;
+        if (popCount == 1) {
           showAppCloseConfirmation(context);
           setState(() {
             popStatus = true;

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants.dart';
-import '../../widgets/provider/user_info_provider.dart';
 
 class ShopkeeperSignupScreen extends StatefulWidget {
   static const routeName = '/shopkeeper-sign-up-1';
@@ -53,8 +52,8 @@ class _ShopkeeperSignupScreenState extends State<ShopkeeperSignupScreen>
       content: Text("Press back again to exit"),
       backgroundColor: Colors.white,
     );
-    popCount+=1;
-    if (popCount == 1){
+    popCount += 1;
+    if (popCount == 1) {
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
       setState(() {
         popStatus = true;
@@ -174,10 +173,10 @@ class _ShopkeeperSignupScreenState extends State<ShopkeeperSignupScreen>
                               },
                               style: ButtonStyle(
                                   backgroundColor:
-                                      MaterialStateProperty.all<Color>(
+                                      WidgetStateProperty.all<Color>(
                                           Constants.redColor),
                                   foregroundColor:
-                                      MaterialStateProperty.all<Color>(
+                                      WidgetStateProperty.all<Color>(
                                           Colors.white)),
                               child: Container(
                                 height: 48,

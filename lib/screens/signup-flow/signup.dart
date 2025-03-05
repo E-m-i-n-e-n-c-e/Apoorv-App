@@ -7,7 +7,7 @@ import 'letsgo.dart';
 
 class SignUpScreen extends StatefulWidget {
   static const routeName = '/sign-up-1';
-  const SignUpScreen({Key? key}) : super(key: key);
+  const SignUpScreen({super.key});
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
@@ -53,7 +53,7 @@ class _SignUpScreenState extends State<SignUpScreen> with RestorationMixin {
   }
 
   void showAppCloseConfirmation(BuildContext context) {
-    final snackBar = const SnackBar(
+    const snackBar = SnackBar(
       content: Text("Press back again to exit"),
       backgroundColor: Colors.white,
     );
@@ -133,8 +133,7 @@ class _SignUpScreenState extends State<SignUpScreen> with RestorationMixin {
                                 filled: true,
                                 fillColor: Constants.yellowColor,
                                 hintText: "Full Name",
-                                hintStyle:
-                                    const TextStyle(color: Colors.black),
+                                hintStyle: const TextStyle(color: Colors.black),
                               ),
                             ),
                             Constants.gap,
@@ -159,8 +158,7 @@ class _SignUpScreenState extends State<SignUpScreen> with RestorationMixin {
                                 filled: true,
                                 fillColor: Constants.yellowColor,
                                 hintText: 'Phone Number',
-                                hintStyle:
-                                    const TextStyle(color: Colors.black),
+                                hintStyle: const TextStyle(color: Colors.black),
                               ),
                             ),
                             Constants.gap,
@@ -172,10 +170,8 @@ class _SignUpScreenState extends State<SignUpScreen> with RestorationMixin {
                                     validator: (value) {
                                       if (value == null ||
                                           value.isEmpty ||
-                                          !RegExp(
-                                                  r"(2020|2021|2022|2023)(bcs|bec|bcy|bds)0\d{3}")
-                                              .hasMatch(
-                                                  value.toLowerCase())) {
+                                          !RegExp(r"(2020|2021|2022|2023)(bcs|bec|bcy|bds)0\d{3}")
+                                              .hasMatch(value.toLowerCase())) {
                                         return "You know the format";
                                       }
                                       return null;
@@ -189,8 +185,8 @@ class _SignUpScreenState extends State<SignUpScreen> with RestorationMixin {
                                       filled: true,
                                       fillColor: Constants.yellowColor,
                                       hintText: 'Roll Number',
-                                      hintStyle: const TextStyle(
-                                          color: Colors.black),
+                                      hintStyle:
+                                          const TextStyle(color: Colors.black),
                                     ),
                                   ),
                                   Constants.gap,
@@ -200,8 +196,7 @@ class _SignUpScreenState extends State<SignUpScreen> with RestorationMixin {
                               Column(
                                 children: [
                                   TextFormField(
-                                    controller:
-                                        userCollegeNameController.value,
+                                    controller: userCollegeNameController.value,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return "Fill your college name!";
@@ -215,8 +210,8 @@ class _SignUpScreenState extends State<SignUpScreen> with RestorationMixin {
                                       filled: true,
                                       fillColor: Constants.yellowColor,
                                       hintText: "College Name",
-                                      hintStyle: const TextStyle(
-                                          color: Colors.black),
+                                      hintStyle:
+                                          const TextStyle(color: Colors.black),
                                     ),
                                   ),
                                   Constants.gap,
@@ -238,7 +233,7 @@ class _SignUpScreenState extends State<SignUpScreen> with RestorationMixin {
                                     },
                                   ),
                                 ),
-                                Text(
+                                const Text(
                                   "From IIIT Kottayam",
                                   style: TextStyle(fontSize: 17),
                                 ),
@@ -267,16 +262,16 @@ class _SignUpScreenState extends State<SignUpScreen> with RestorationMixin {
                                         newUserPhNo:
                                             userPhNoController.value.text);
                                   }
-                                  Navigator.of(context)
-                                      .restorablePushNamed(LetsGoPage.routeName);
+                                  Navigator.of(context).restorablePushNamed(
+                                      LetsGoPage.routeName);
                                 }
                               },
                               style: ButtonStyle(
                                   backgroundColor:
-                                      MaterialStateProperty.all<Color>(
+                                      WidgetStateProperty.all<Color>(
                                           Constants.redColor),
                                   foregroundColor:
-                                      MaterialStateProperty.all<Color>(
+                                      WidgetStateProperty.all<Color>(
                                           Colors.white)),
                               child: Container(
                                 height: 48,

@@ -1,13 +1,15 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:apoorv_app/screens/shopkeeper/shopkeeper_signup.dart';
 import 'package:apoorv_app/screens/signup-flow/signup.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../../constants.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
   static const routeName = '/welcome';
+  @override
   _WelcomeScreenState createState() => _WelcomeScreenState();
 }
 
@@ -29,13 +31,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   }
 
   void showAppCloseConfirmation(BuildContext context) {
-    final snackBar = SnackBar(
+    const snackBar = SnackBar(
       content: Text("Press back again to exit"),
       backgroundColor: Colors.white,
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
+  @override
   Widget build(BuildContext context) {
     return PopScope(
       canPop: popStatus,
@@ -81,9 +84,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         child: FilledButton.icon(
                           onPressed: () => Navigator.of(context)
                               .restorablePushReplacementNamed(
-                              SignUpScreen.routeName),
+                                  SignUpScreen.routeName),
                           style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
+                              backgroundColor: WidgetStateProperty.all<Color>(
                                   Colors.transparent)),
                           icon: SizedBox(
                             height: 64,
@@ -109,7 +112,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         child: IconButton(
                             onPressed: () => Navigator.of(context)
                                 .restorablePushReplacementNamed(
-                                ShopkeeperSignupScreen.routeName),
+                                    ShopkeeperSignupScreen.routeName),
                             icon: const Icon(Icons.shop)),
                       ),
                     ],

@@ -31,7 +31,7 @@ class LandingPage extends StatelessWidget {
                 height: 40,
                 width: MediaQuery.of(context).size.width,
                 child: InkWell(
-                  child: Icon(Icons.close, color: Colors.white, size: 30),
+                  child: const Icon(Icons.close, color: Colors.white, size: 30),
                   onTap: () {
                     // Handle cross icon press event here
                   },
@@ -46,7 +46,7 @@ class LandingPage extends StatelessWidget {
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: image?.image ??
-                            AssetImage('assets/images/wolf.png'),
+                            const AssetImage('assets/images/wolf.png'),
                         fit: BoxFit.contain,
                       ),
                       borderRadius: BorderRadius.circular(20),

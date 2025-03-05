@@ -28,7 +28,7 @@ class ProfileScreen extends StatelessWidget {
 
           indicatorBuilder:
               (BuildContext context, IndicatorController controller) {
-            return Icon(
+            return const Icon(
               Icons.ac_unit,
               color: Colors.blue,
               size: 30,
@@ -170,8 +170,8 @@ Widget buildLogoutButton(BuildContext context) {
       Navigator.of(context).pushReplacementNamed(WelcomeScreen.routeName);
     },
     style: ButtonStyle(
-      backgroundColor: MaterialStateProperty.all<Color>(Constants.redColor),
-      foregroundColor: MaterialStateProperty.all<Color>(Constants.whiteColor),
+      backgroundColor: WidgetStateProperty.all<Color>(Constants.redColor),
+      foregroundColor: WidgetStateProperty.all<Color>(Constants.whiteColor),
     ),
     child: const SizedBox(
       width: double.infinity,
@@ -188,8 +188,8 @@ Widget buildPointsBalanceButton(BuildContext context) {
   return FilledButton(
     onPressed: () {},
     style: ButtonStyle(
-      backgroundColor: MaterialStateProperty.all<Color>(Constants.yellowColor),
-      foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
+      backgroundColor: WidgetStateProperty.all<Color>(Constants.yellowColor),
+      foregroundColor: WidgetStateProperty.all<Color>(Colors.black),
     ),
     child: SizedBox(
       width: double.infinity,

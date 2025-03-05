@@ -1,8 +1,4 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-
-import '../../../constants.dart';
 
 class FeedList extends StatelessWidget {
   const FeedList({

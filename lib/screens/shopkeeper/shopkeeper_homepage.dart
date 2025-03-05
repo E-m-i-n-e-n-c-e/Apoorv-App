@@ -16,7 +16,7 @@ class _ShopkeeperHomePageState extends State<ShopkeeperHomePage> {
   int currentPageIndex = 0;
 
   bool popStatus = true;
-  int popCount=0;
+  int popCount = 0;
 
   @override
   void initState() {
@@ -32,8 +32,8 @@ class _ShopkeeperHomePageState extends State<ShopkeeperHomePage> {
   }
 
   void showAppCloseConfirmation(BuildContext context) {
-    final snackBar = SnackBar(
-      content: const Text("Press back again to exit"),
+    const snackBar = SnackBar(
+      content: Text("Press back again to exit"),
       backgroundColor: Colors.white,
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -51,8 +51,8 @@ class _ShopkeeperHomePageState extends State<ShopkeeperHomePage> {
         if (didPop) {
           return;
         }
-        popCount+=1;
-        if(popCount == 1){
+        popCount += 1;
+        if (popCount == 1) {
           showAppCloseConfirmation(context);
           setState(() {
             popStatus = true;

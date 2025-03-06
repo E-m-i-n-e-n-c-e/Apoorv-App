@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import '../../../../../../constants.dart';
 import '../../../../../../utils/Models/Feed.dart';
+import '../components/marker_dialogs.dart';
 import 'event_details.dart';
 
 class AllEventsScreen extends StatefulWidget {
@@ -114,7 +115,30 @@ class _AllEventsScreenState extends State<AllEventsScreen>
         _allEvents.where((event) => event.day == _selectedDay).toList();
 
     // Sort by time
-    dayEvents.sort((a, b) => a.time.compareTo(b.time));
+    dayEvents.sort((a, b) {
+      // Extract start time from format "HH:MM AM/PM - HH:MM AM/PM"
+      String getStartTime(String timeRange) {
+        final startTime = timeRange.split('-')[0].trim();
+        // Convert to 24-hour format for proper sorting
+        final parts = startTime.split(' ');
+        final time = parts[0].split(':');
+        int hours = int.parse(time[0]);
+        final minutes = int.parse(time[1]);
+        final isPM = parts[1].toUpperCase() == 'PM';
+
+        if (isPM && hours != 12) {
+          hours += 12;
+        } else if (!isPM && hours == 12) {
+          hours = 0;
+        }
+
+        return '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}';
+      }
+
+      final aStartTime = getStartTime(a.time);
+      final bStartTime = getStartTime(b.time);
+      return aStartTime.compareTo(bStartTime);
+    });
 
     setState(() {
       _filteredEvents = dayEvents;
@@ -234,13 +258,18 @@ class _AllEventsScreenState extends State<AllEventsScreen>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (event.image != null)
-              ClipRRect(
-                borderRadius:
-                    const BorderRadius.vertical(top: Radius.circular(12)),
-                child: SizedBox(
-                  width: double.infinity,
-                  height: 150,
-                  child: event.image,
+              Padding(
+                padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Container(
+                    color: Colors.black,
+                    width: double.infinity,
+                    height: 150,
+                    child: Center(
+                      child: event.image,
+                    ),
+                  ),
                 ),
               ),
             Padding(
@@ -248,19 +277,72 @@ class _AllEventsScreenState extends State<AllEventsScreen>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    event.title,
-                    style: TextStyle(
-                      color: event.txtcolor,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          event.title,
+                          style: TextStyle(
+                            color: event.txtcolor,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      PopupMenuButton<String>(
+                        icon: Icon(Icons.more_vert, color: event.txtcolor),
+                        onSelected: (value) {
+                          if (value == 'edit') {
+                            MarkerDialogs.showEditEventDialog(
+                              context: context,
+                              event: event,
+                              locationName: locationName,
+                              onEventUpdated: widget.onEventUpdated,
+                              onColorsSelected: (_, __) {},
+                            );
+                          } else if (value == 'delete') {
+                            MarkerDialogs.showDeleteEventDialog(
+                              context: context,
+                              eventId: event.id,
+                              onEventDeleted: () =>
+                                  widget.onEventDeleted(event.id),
+                            );
+                          }
+                        },
+                        itemBuilder: (context) => [
+                          PopupMenuItem(
+                            value: 'edit',
+                            child: Row(
+                              children: [
+                                const Icon(Icons.edit,
+                                    color: Constants.creamColor),
+                                const SizedBox(width: 8),
+                                Text('Edit',
+                                    style: TextStyle(color: event.txtcolor)),
+                              ],
+                            ),
+                          ),
+                          PopupMenuItem(
+                            value: 'delete',
+                            child: Row(
+                              children: [
+                                const Icon(Icons.delete,
+                                    color: Constants.redColor),
+                                const SizedBox(width: 8),
+                                Text('Delete',
+                                    style: TextStyle(color: event.txtcolor)),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 8),
                   if (event.description != null &&
                       event.description!.isNotEmpty)
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 8),
+                      padding: const EdgeInsets.only(top: 8, bottom: 12),
                       child: Text(
                         event.description!,
                         style: TextStyle(

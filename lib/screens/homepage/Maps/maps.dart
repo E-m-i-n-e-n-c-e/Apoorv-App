@@ -6,6 +6,7 @@ import '../../../../../constants.dart';
 import '../../../../../utils/Models/Feed.dart';
 import 'services/supabase_service.dart';
 import 'components/map_markers.dart';
+import 'components/academic_block_markers.dart';
 import 'components/marker_dialogs.dart';
 import 'services/map_cache_service.dart';
 import 'screens/event_details.dart';
@@ -632,6 +633,22 @@ class _MapsScreenState extends State<MapsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Filter out academic block markers (BB, BC, BD) for regular marker layer
+    final regularMarkers = markers.where((marker) {
+      final name = marker.locationName;
+      return !(name.startsWith('BB') ||
+          name.startsWith('BC') ||
+          name.startsWith('BD'));
+    }).toList();
+
+    // Get academic block markers for the academic block layer
+    final academicMarkers = markers.where((marker) {
+      final name = marker.locationName;
+      return name.startsWith('BB') ||
+          name.startsWith('BC') ||
+          name.startsWith('BD');
+    }).toList();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('APOORV 2025 Map'),
@@ -717,8 +734,9 @@ class _MapsScreenState extends State<MapsScreen> {
                 maxZoom: maxZoom,
                 keepBuffer: 8,
               ),
+              // Regular markers (non-academic blocks)
               MapMarkerLayer(
-                markers: markers,
+                markers: regularMarkers,
                 onMarkerTapped: _handleMarkerTapped,
                 onMarkerUpdated: _handleMarkerUpdate,
                 onMarkerDeleted: _handleMarkerDelete,
@@ -726,9 +744,66 @@ class _MapsScreenState extends State<MapsScreen> {
                 onEventUpdated: _handleEventUpdated,
                 onEventDeleted: _handleEventDeleted,
               ),
+              // Academic block markers (BB, BC, BD)
+              AcademicBlockMarkers(
+                markers: academicMarkers,
+                onMarkerTapped: _handleMarkerTapped,
+              ),
             ],
           ),
           _buildZoomControls(),
+          // Add a legend for the academic blocks
+          Positioned(
+            left: 16,
+            bottom: 60,
+            child: _buildAcademicBlockLegend(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAcademicBlockLegend() {
+    return Container(
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: Constants.blackColor.withOpacity(0.8),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Constants.creamColor.withOpacity(0.3)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Text(
+            'Academic Block',
+            style: TextStyle(
+              color: Constants.whiteColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 12,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Row(
+            children: [
+              Container(
+                width: 10,
+                height: 10,
+                decoration: const BoxDecoration(
+                  color: Constants.redColor,
+                  shape: BoxShape.circle,
+                ),
+              ),
+              const SizedBox(width: 4),
+              const Text(
+                'Grouped Rooms',
+                style: TextStyle(
+                  color: Constants.creamColor,
+                  fontSize: 10,
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );

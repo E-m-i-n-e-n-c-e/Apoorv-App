@@ -55,7 +55,6 @@ class EventDetailsScreen extends StatelessWidget {
                     ),
                   ),
                   width: double.infinity,
-                  height: 250,
                   child: Center(
                     child: event.image,
                   ),

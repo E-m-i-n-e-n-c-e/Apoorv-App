@@ -277,67 +277,13 @@ class _AllEventsScreenState extends State<AllEventsScreen>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          event.title,
-                          style: TextStyle(
-                            color: event.txtcolor,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      PopupMenuButton<String>(
-                        icon: Icon(Icons.more_vert, color: event.txtcolor),
-                        onSelected: (value) {
-                          if (value == 'edit') {
-                            MarkerDialogs.showEditEventDialog(
-                              context: context,
-                              event: event,
-                              locationName: locationName,
-                              onEventUpdated: widget.onEventUpdated,
-                              onColorsSelected: (_, __) {},
-                            );
-                          } else if (value == 'delete') {
-                            MarkerDialogs.showDeleteEventDialog(
-                              context: context,
-                              eventId: event.id,
-                              onEventDeleted: () =>
-                                  widget.onEventDeleted(event.id),
-                            );
-                          }
-                        },
-                        itemBuilder: (context) => [
-                          PopupMenuItem(
-                            value: 'edit',
-                            child: Row(
-                              children: [
-                                const Icon(Icons.edit,
-                                    color: Constants.creamColor),
-                                const SizedBox(width: 8),
-                                Text('Edit',
-                                    style: TextStyle(color: event.txtcolor)),
-                              ],
-                            ),
-                          ),
-                          PopupMenuItem(
-                            value: 'delete',
-                            child: Row(
-                              children: [
-                                const Icon(Icons.delete,
-                                    color: Constants.redColor),
-                                const SizedBox(width: 8),
-                                Text('Delete',
-                                    style: TextStyle(color: event.txtcolor)),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                  Text(
+                    event.title,
+                    style: TextStyle(
+                      color: event.txtcolor,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   if (event.description != null &&
                       event.description!.isNotEmpty)

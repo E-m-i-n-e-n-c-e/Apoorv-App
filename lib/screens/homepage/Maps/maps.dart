@@ -277,37 +277,13 @@ class _MapsScreenState extends State<MapsScreen> {
                   // Location name
                   Padding(
                     padding: const EdgeInsets.all(16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            selectedMarker!.locationName,
-                            style: const TextStyle(
-                              color: Constants.whiteColor,
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.add_circle_outline,
-                              color: Constants.redColor),
-                          onPressed: () {
-                            Navigator.pop(context);
-                            MarkerDialogs.showAddEventDialog(
-                              context: context,
-                              locationId: selectedMarker!.id,
-                              locationName: selectedMarker!.locationName,
-                              selectedColor: selectedMarkerColor,
-                              selectedTextColor: selectedTextColor,
-                              onEventAdded: _handleEventAdded,
-                              onColorsSelected: _handleColorSelection,
-                            );
-                          },
-                        ),
-                      ],
+                    child: Text(
+                      selectedMarker!.locationName,
+                      style: const TextStyle(
+                        color: Constants.whiteColor,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                   // Day selector
@@ -379,41 +355,21 @@ class _MapsScreenState extends State<MapsScreen> {
   }
 
   Widget _buildNoEventsMessage() {
-    return Center(
+    return const Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(
+          Icon(
             Icons.event_busy,
             color: Constants.creamColor,
             size: 48,
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           Text(
-            'No events on Day $selectedDay',
-            style: const TextStyle(
+            'No events scheduled',
+            style: TextStyle(
               color: Constants.creamColor,
               fontSize: 18,
-            ),
-          ),
-          const SizedBox(height: 8),
-          TextButton.icon(
-            onPressed: () {
-              Navigator.pop(context);
-              MarkerDialogs.showAddEventDialog(
-                context: context,
-                locationId: selectedMarker!.id,
-                locationName: selectedMarker!.locationName,
-                selectedColor: selectedMarkerColor,
-                selectedTextColor: selectedTextColor,
-                onEventAdded: _handleEventAdded,
-                onColorsSelected: _handleColorSelection,
-              );
-            },
-            icon: const Icon(Icons.add, color: Constants.redColor),
-            label: const Text(
-              'Add Event',
-              style: TextStyle(color: Constants.redColor),
             ),
           ),
         ],
@@ -478,69 +434,13 @@ class _MapsScreenState extends State<MapsScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          event.title,
-                          style: TextStyle(
-                            color: event.txtcolor,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      PopupMenuButton<String>(
-                        icon: Icon(Icons.more_vert, color: event.txtcolor),
-                        onSelected: (value) {
-                          if (value == 'edit') {
-                            Navigator.pop(context); // Close bottom sheet
-                            MarkerDialogs.showEditEventDialog(
-                              context: context,
-                              event: event,
-                              locationName: selectedMarker!.locationName,
-                              onEventUpdated: _handleEventUpdated,
-                              onColorsSelected: _handleColorSelection,
-                            );
-                          } else if (value == 'delete') {
-                            Navigator.pop(context); // Close bottom sheet
-                            MarkerDialogs.showDeleteEventDialog(
-                              context: context,
-                              eventId: event.id,
-                              onEventDeleted: () =>
-                                  _handleEventDeleted(event.id),
-                            );
-                          }
-                        },
-                        itemBuilder: (context) => [
-                          PopupMenuItem(
-                            value: 'edit',
-                            child: Row(
-                              children: [
-                                const Icon(Icons.edit,
-                                    color: Constants.creamColor),
-                                const SizedBox(width: 8),
-                                Text('Edit',
-                                    style: TextStyle(color: event.txtcolor)),
-                              ],
-                            ),
-                          ),
-                          PopupMenuItem(
-                            value: 'delete',
-                            child: Row(
-                              children: [
-                                const Icon(Icons.delete,
-                                    color: Constants.redColor),
-                                const SizedBox(width: 8),
-                                Text('Delete',
-                                    style: TextStyle(color: event.txtcolor)),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                  Text(
+                    event.title,
+                    style: TextStyle(
+                      color: event.txtcolor,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(height: 8),
                   if (event.description != null &&
@@ -688,31 +588,6 @@ class _MapsScreenState extends State<MapsScreen> {
             options: MapOptions(
               initialCenter: const LatLng(9.754969, 76.650201),
               initialZoom: initialZoom,
-              onTap: (tapPosition, point) async {
-                if (!mapBounds.contains(point)) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text(
-                          'Please select a location within the campus boundaries.'),
-                      backgroundColor: Colors.red,
-                    ),
-                  );
-                  return;
-                }
-
-                await MarkerDialogs.showAddLocationDialog(
-                  context: context,
-                  position: point,
-                  selectedMarkerColor: selectedMarkerColor,
-                  selectedTextColor: selectedTextColor,
-                  onMarkerAdded: (marker) {
-                    setState(() {
-                      markers.add(marker);
-                    });
-                  },
-                  onColorsSelected: _handleColorSelection,
-                );
-              },
               minZoom: minZoom,
               maxZoom: maxZoom,
               interactionOptions: const InteractionOptions(
@@ -752,58 +627,6 @@ class _MapsScreenState extends State<MapsScreen> {
             ],
           ),
           _buildZoomControls(),
-          // Add a legend for the academic blocks
-          Positioned(
-            left: 16,
-            bottom: 60,
-            child: _buildAcademicBlockLegend(),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildAcademicBlockLegend() {
-    return Container(
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: Constants.blackColor.withOpacity(0.8),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Constants.creamColor.withOpacity(0.3)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Text(
-            'Academic Block',
-            style: TextStyle(
-              color: Constants.whiteColor,
-              fontWeight: FontWeight.bold,
-              fontSize: 12,
-            ),
-          ),
-          const SizedBox(height: 4),
-          Row(
-            children: [
-              Container(
-                width: 10,
-                height: 10,
-                decoration: const BoxDecoration(
-                  color: Constants.redColor,
-                  shape: BoxShape.circle,
-                ),
-              ),
-              const SizedBox(width: 4),
-              const Text(
-                'Grouped Rooms',
-                style: TextStyle(
-                  color: Constants.creamColor,
-                  fontSize: 10,
-                ),
-              ),
-            ],
-          ),
         ],
       ),
     );

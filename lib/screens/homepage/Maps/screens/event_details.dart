@@ -27,16 +27,6 @@ class EventDetailsScreen extends StatelessWidget {
           event.title,
           style: const TextStyle(color: Constants.whiteColor),
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.edit, color: Constants.redColor),
-            onPressed: () => _showEditEventDialog(context),
-          ),
-          IconButton(
-            icon: const Icon(Icons.delete, color: Constants.redColor),
-            onPressed: () => _showDeleteEventDialog(context),
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Column(

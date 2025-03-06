@@ -35,7 +35,7 @@ const supabaseKey =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR0bW9sdGx5Y2t2bWZ2bnRnZXR6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc5NzE4OTcsImV4cCI6MjA1MzU0Nzg5N30.26ji5DOeeJkZkZvUdLuI3FoNAVGDLsuEe1boWSiucWY";
 
 Future<void> main() async {
-  await DotEnv().load(fileName: '.env');
+  await dotenv.load(fileName: '.env');
 
   WidgetsFlutterBinding.ensureInitialized();
 

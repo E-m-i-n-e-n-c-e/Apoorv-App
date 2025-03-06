@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../../../../../../../utils/Models/Feed.dart';
+import '../../../../../../utils/Models/Feed.dart';
 import 'package:latlong2/latlong.dart';
 import 'dart:io';
 

@@ -1,6 +1,6 @@
 import 'package:apoorv_app/constants.dart';
 import 'package:apoorv_app/providers/shopkeeper_provider.dart';
-import 'package:apoorv_app/screens/homepage/Maps/maps_full_view.dart';
+import 'package:apoorv_app/screens/homepage/Maps/maps.dart';
 import 'package:apoorv_app/shopkeeper/shopkeeper_homepage.dart';
 import 'package:apoorv_app/shopkeeper/shopkeeper_points_screen.dart';
 import 'package:apoorv_app/shopkeeper/shopkeeper_profile_screen.dart';
@@ -139,7 +139,7 @@ class MyApp extends StatelessWidget {
           WelcomeScreen.routeName: (context) => const WelcomeScreen(),
           SignUpScreen.routeName: (context) => const SignUpScreen(),
           HomePage.routeName: (context) => const HomePage(),
-          MapsFullView.routeName: (context) => const MapsFullView(),
+          MapsScreen.routeName: (context) => const MapsScreen(),
           PointsScreen.routeName: (context) => const PointsScreen(),
           Profile2Screen.routeName: (context) => const Profile2Screen(),
           Leaderboard.routeName: (context) => const Leaderboard(),
